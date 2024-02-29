@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from models import BodyPart
+from programbuilder.models import BodyPart
 
 class Command(BaseCommand):
     help = 'Populates BodyPart objects with the bodyparts'

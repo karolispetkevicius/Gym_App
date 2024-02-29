@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from models import Day
+from programbuilder.models import Day
 
 class Command(BaseCommand):
     help = 'Populates Day objects with the days of the week'
