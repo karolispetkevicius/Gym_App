@@ -28,7 +28,6 @@ urlpatterns = [
     path('programs/templates/', TemplateProgramView.as_view(), name='template_programs'),
     path('programs/create_from_template', CreateProgramFromTemplateView.as_view(), name='program_from_template'),
 
-    path('test/', TestView.as_view(), name='exercise_test'),
     path('programbuilder/generate/<int:program_id>/', GenerateExcelView.as_view(), name='generate_excel'),
 
 

@@ -6,6 +6,7 @@ from .serializers import *
 import pandas as pd
 from io import BytesIO
 from django.http import HttpResponse
+from datetime import datetime, timedelta
 
 
 
@@ -282,80 +283,65 @@ class CreateProgramFromTemplateView(APIView):
     
 
 
-class ExerciseInDaysTest(APIView):
-    def get(self, request, program_day):
-        exercises = ExerciseInDay.objects.all(program_day=program_day)
-        serializer = ExerciseInDaySerializer(exercises)
-        return Response(serializer.data)
-
-
-class TestView(APIView):
-    def get(self, request):
-        # Get the first ExerciseInDay instance
-        exercise_in_day = ExerciseInDay.objects.first()
-
-        # Serialize the ExerciseInDay instance
-        serializer = ExerciseInDaySerializer(exercise_in_day)
-
-        # Return the serialized data as a JSON response
-        return Response(serializer.data)
     
 
-from datetime import datetime, timedelta
-
-from datetime import datetime, timedelta
 
 class GenerateExcelView(APIView):
-    def get(self, request, program_id):
+        def get(self, request, program_id):
+            try:
         
-        program = WorkoutProgram.objects.get(pk=program_id)
-        program_days = ProgramDay.objects.filter(workout_program=program)
+                program = WorkoutProgram.objects.get(pk=program_id)
+                program_days = ProgramDay.objects.filter(workout_program=program)
 
-        # Serialize the data
-        program_serializer = ProgramSerializer(program)
-        program_days_serializer = ProgramDaySerializer(program_days, many=True)
+                # Serialize the data
+                program_serializer = ProgramSerializer(program)
+                program_days_serializer = ProgramDaySerializer(program_days, many=True)
 
-        # Create a new Excel file
-        output = BytesIO()
-        writer = pd.ExcelWriter(output, engine='xlsxwriter')
+                # Create a new Excel file
+                output = BytesIO()
+                writer = pd.ExcelWriter(output, engine='xlsxwriter')
 
-        date = datetime.now()
+                date = datetime.now()
 
-        # For each day in the next 90 days
-        for _ in range(90):
-            # Get the program for the current day of the week
-            day_of_week = date.strftime('%A')
-            day = next((day for day in program_days_serializer.data if day['day_of_week'] == day_of_week), None)
+                # For each day in the next 90 days
+                for _ in range(90):
+                    # Get the program for the current day of the week
+                    day_of_week = date.strftime('%A')
+                    day = next((day for day in program_days_serializer.data if day['day_of_week'] == day_of_week), None)
 
-            if day is not None:
-                if day['rest_day']:
-                    # If it's a rest day, just write "Rest Day" to the sheet
-                    data = {'Rest Day': ['']}
-                else:
-                    # Otherwise, create a DataFrame for the day's exercises
-                    data = {
-                        'Exercise': [exercise['exercise_name'] for exercise in day['exercises']],
-                        'Sets': [exercise['sets'] for exercise in day['exercises']],
-                        'Reps': [exercise['reps'] for exercise in day['exercises']],
-                        'Weight': ['' for exercise in day['exercises']],  # Leave weight blank for the user to fill in
-                    }
-                df = pd.DataFrame(data)
+                    if day is not None:
+                        if day['rest_day']:
+                            # If it's a rest day, just write "Rest Day" to the sheet
+                            data = {'Rest Day': ['']}
+                        else:
+                            # Otherwise, create a DataFrame for the day's exercises
+                            data = {
+                                'Exercise': [exercise['exercise_name'] for exercise in day['exercises']],
+                                'Sets': [exercise['sets'] for exercise in day['exercises']],
+                                'Reps': [exercise['reps'] for exercise in day['exercises']],
+                                'Weight': ['' for exercise in day['exercises']],  # Leave weight blank for the user to fill in
+                            }
+                        df = pd.DataFrame(data)
 
-                # Add the DataFrame to the Excel writer
-                df.to_excel(writer, sheet_name=date.strftime('%Y-%m-%d'), index=False)  # Use the date as the sheet name
+                        # Add the DataFrame to the Excel writer
+                        df.to_excel(writer, sheet_name=date.strftime('%Y-%m-%d'), index=False)  # Use the date as the sheet name
 
-            # Move to the next day
-            date += timedelta(days=1)
+                    # Move to the next day
+                    date += timedelta(days=1)
 
-        # Close the pandas Excel writer
-        writer.close()
+                # Close the pandas Excel writer
+                writer.close()
 
-        # Create a response with the Excel file
-        output.seek(0)
-        filename = f"{program_serializer.data['name']}.xlsx"
-        response = HttpResponse(output.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = f'attachment; filename={filename}'
+                # Create a response with the Excel file
+                output.seek(0)
+                filename = f"{program_serializer.data['name']}.xlsx"
+                response = HttpResponse(output.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                response['Content-Disposition'] = f'attachment; filename={filename}'
 
-        return response
+                return response
+        
+            except WorkoutProgram.DoesNotExist:
+                return Response({"detail": "Workout program not found."}, status=status.HTTP_404_NOT_FOUND)
+
 
 
