@@ -1,0 +1,22 @@
+.create-program {
+    margin: 5px; /* adjust as needed */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.create-program input {
+    margin-right: 24px; /* adjust as needed */
+}
+
+
+.create-program button {
+    background-color: #515659;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

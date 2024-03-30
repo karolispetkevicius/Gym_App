@@ -43,7 +43,7 @@ function AddDay({ programId }) {
         </div>
         <button type="submit">Select Day</button>
       </form>
-      {dayId && <AddExercise dayId={dayId} />} {/* Render the AddExercise component if a day ID is present */}
+      {dayId && <AddExercise dayId={dayId} />}
     </div>
   );
 }

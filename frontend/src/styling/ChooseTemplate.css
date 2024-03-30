@@ -1,0 +1,21 @@
+.choose-template {
+    margin: 30px; /* adjust as needed */
+
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.template-select {
+    margin-right: 5px; /* adjust as needed */
+}
+
+.template-button {
+    background-color: #515659;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

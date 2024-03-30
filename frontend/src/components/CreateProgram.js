@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import '../styling/CreateProgram.css';
+
 function CreateProgram({ onProgramCreated }) {
     const [programName, setProgramName] = useState('');
   
@@ -19,15 +21,15 @@ function CreateProgram({ onProgramCreated }) {
     };
   
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="create-program">
         <input
           type="text"
           value={programName}
           onChange={(e) => setProgramName(e.target.value)}
         />
-        <button type="submit">Add Program</button>
+        <button type="submit">Create New Program</button>
       </form>
     );
-  }
+}
 
 export default CreateProgram;

@@ -1,0 +1,19 @@
+.choose-template {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.template-select {
+    margin-right: 10px;
+}
+
+.delete-exercise-button {
+    background-color: #515659;
+    color: white;
+    padding: 3px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
