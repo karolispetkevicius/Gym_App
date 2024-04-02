@@ -48,7 +48,7 @@ function ProgramBuilder() {
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ flex: 2,  marginLeft:'10px'}}>
-            <h2 style={{fontSize:'22px'}}>Create Your own workout program or select from one of our templates</h2>
+            <h2 style={{fontSize:'22px', marginRight:'300px'}}>Create Your own workout program or select from one of our templates</h2>
                 <CreateProgram onProgramCreated={handleProgramCreated} />
                 <ChooseTemplate onTemplateSelected={handleTemplateSelected} /> 
                 {programId && (
