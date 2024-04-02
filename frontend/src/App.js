@@ -9,7 +9,12 @@ function App() {
       <header className="App-header">
         Gym Program Builder
       </header>
-      <ProgramBuilder />
+        <body>
+          <ProgramBuilder />
+        </body>
+      <footer className="App-footer">
+        2024. Made using Django and React
+      </footer>
     </div>
   );
 }

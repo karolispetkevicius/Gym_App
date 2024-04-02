@@ -47,21 +47,27 @@ function ProgramBuilder() {
 
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div style={{ flex: 2 }}>
-                <ChooseTemplate onTemplateSelected={handleTemplateSelected} /> 
+            <div style={{ flex: 2,  marginLeft:'10px'}}>
+            <h2 style={{fontSize:'22px'}}>Create Your own workout program or select from one of our templates</h2>
                 <CreateProgram onProgramCreated={handleProgramCreated} />
+                <ChooseTemplate onTemplateSelected={handleTemplateSelected} /> 
                 {programId && (
                     <div>
-                        <h2>Choose day and add exercises</h2>
-                        <AddExercise programId={programId} onExerciseAdded={handleExerciseAdded} /> 
-                        <h2>Download Excel Template</h2>
-                        <DownloadButton programId={programId} />
+                        <div style={{ marginBottom: '48px' }}>
+                            <h2>Choose day and add exercises</h2>
+                            <AddExercise programId={programId} onExerciseAdded={handleExerciseAdded} />
+                        </div>
+                        <div>
+                            <h2>Download Your free Excel Template </h2>
+                        </div>
+                            <DownloadButton programId={programId} />
                     </div>
+            
                 )}
             </div>
-            <div style={{ flex: 2 }}>
+            <div style={{ flex: 2, fontSize:'24px', marginBottom:'12px'}}>
                 <h2>Program: {programName}</h2>
-                    <div style={{ marginBottom: '30px', fontSize: '14px' }} >
+                    <div style={{ marginBottom: '30px',  fontSize: '14px' }} >
                         Click on days to expand
                     </div>
                     {programId && (

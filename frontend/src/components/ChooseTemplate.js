@@ -32,7 +32,7 @@ function ChooseTemplate({ onTemplateSelected }) {
     };
 
     return (
-        <div className="choose-template">
+        <div className="choose-template-component">
             <select value={selectedTemplate} onChange={handleSelection} className="template-select">
                 {templates.map((template) => (
                     <option key={template.id} value={template.id}>

@@ -1,0 +1,9 @@
+.form-container {
+    width: 100%;
+    margin-right: 240px;
+    max-width: 550px; /* adjust as needed */
+    padding: 20px;
+    border: 1px solid #271b74;
+    border-radius: 10px; 
+}
+

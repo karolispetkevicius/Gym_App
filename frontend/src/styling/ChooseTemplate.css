@@ -1,8 +1,10 @@
-.choose-template {
-    margin: 30px; /* adjust as needed */
-
-    border: 1px solid #ddd;
-    border-radius: 5px;
+.choose-template-component {
+    margin: 5px; /* adjust as needed */
+    margin-right: 240px;
+    margin-top : 30px;
+    padding: 10px;
+    border: 1px solid hsl(208, 80%, 23%);
+    border-radius: 10px;
     justify-content: space-between;
     align-items: center;
 }
@@ -12,10 +14,11 @@
 }
 
 .template-button {
-    background-color: #515659;
+    background-color: #405a8e;
     color: white;
     padding: 10px 24px;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
 }
+

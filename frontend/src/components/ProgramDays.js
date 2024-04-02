@@ -40,10 +40,10 @@ function ProgramDays({ programId }) {
                 const bodyParts = [...new Set(day.exercises.map(exercise => exercise.body_part))];
 
                 return (
-                    <div key={day.id} style={{ marginBottom: '22px' }}>
+                    <div key={day.id} style={{ marginBottom: '22px',  }}>
                         <Collapsible trigger={
             <>
-                    <h3 style={{ fontWeight: 'bold', display: 'inline', marginRight: '11px', fontSize: '28px' }}>
+                    <h3 style={{ fontWeight: 'bold', display: 'inline', marginRight: '11px', fontSize: '32px' }}>
                     {day.day_of_week}
                 </h3> 
                 <span style={{ fontSize: '14px' }}>{bodyParts.join('/')}</span>
@@ -53,11 +53,13 @@ function ProgramDays({ programId }) {
                                 <p>Rest Day</p>
                             ) : (
                                 day.exercises.map((exercise, index) => (
-                                    <div key={exercise.id} style={{ display: 'flex', alignItems: 'center' }}>
-                                        <p style={{ marginRight: '5px' }}>
-                                            {index + 1}. {exercise.exercise_name} {exercise.sets} sets {exercise.reps} reps
+                                    <div key={exercise.id} style={{ display: 'flex', alignItems: 'center', fontSize:'18px',marginRight:'5px' }}>
+                                        <p>
+                                        <span style={{ fontSize: '20px', fontWeight: 'bold' }}>{index + 1}. {exercise.exercise_name}</span>
+                                            {' '}
+                                        {exercise.sets} sets {exercise.reps} reps
                                         </p>
-                                        <div style={{ display: 'flex', marginBottom: '2px' }}>
+                                        <div style={{ display: 'flex', marginBottom: '4px', marginLeft: '10px' }}>
                                             <EditExercise exercise={exercise} onExerciseEdited={onExerciseEdited} />
                                         </div>
                                         <div style={{ display: 'flex'}}>

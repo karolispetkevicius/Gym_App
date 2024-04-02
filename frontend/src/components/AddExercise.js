@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import '../styling/AddExercise.css';
+import '../styling/Form.css'
 
 function AddExercise({ programId, onExerciseAdded }) {
     const [day, setDay] = useState('Monday');
@@ -78,8 +79,8 @@ function AddExercise({ programId, onExerciseAdded }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-        <div style={{ display: 'flex', marginBottom: '20px' }}>
+        <form onSubmit={handleSubmit} className='form-container'>
+        <div style={{ display: 'flex', marginBottom: '20px', fontSize: '20px' }}>
             <label>
                 Day:
                 <select value={day} onChange={(e) => setDay(e.target.value)}>
@@ -99,7 +100,7 @@ function AddExercise({ programId, onExerciseAdded }) {
         </div>
         {!isRestDay && (
             <>
-            <div style={{ display: 'flex', marginBottom: '20px' }}>
+            <div style={{ display: 'flex', marginBottom: '20px', fontSize:'16px' }}>
                 <label>
                     Exercise:
                     <input type="text" placeholder="Search..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
@@ -112,7 +113,7 @@ function AddExercise({ programId, onExerciseAdded }) {
                     </select>
                 </label>
                 </div>
-                <div style={{ display: 'flex', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', marginBottom: '20px', fontSize:'16px' }}>
                     <label>
                         Sets:
                         <input type="number" min="1" value={sets} onChange={(e) => setSets(e.target.value)} />
@@ -126,7 +127,7 @@ function AddExercise({ programId, onExerciseAdded }) {
                 
         )}
         {isRestDay && (
-            <button type="button" onClick={handleUnsetRestDay}>Unset Rest Day</button>
+            <button type="button" onClick={handleUnsetRestDay} className="add-exercise-button">Unset Rest Day</button>
         )}
         <button type="submit" className="add-exercise-button">{isRestDay ? 'Set Rest Day' : 'Add Exercise'}</button>
     </form>
