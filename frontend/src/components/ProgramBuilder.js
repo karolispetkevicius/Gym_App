@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CreateProgram from './CreateProgram';
 import ChooseTemplate from './ChooseTemplate'; // Import the ChooseTemplate component
 import ProgramDays from './ProgramDays';
 import AddExercise from './AddExercise';
-import DeleteExercise from './DeleteExercise';
-import EditExercise from './EditExercise';
 import DownloadButton from './DownloadTemplate';
 
 function ProgramBuilder() {
