@@ -1,11 +1,37 @@
 from django.urls import path, include
 from django.contrib import admin
 from .views import *
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Snippets API",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
+
+
+
+
+
+
+
+
+
+
+
 
 urlpatterns = [
     path('programs/create/', CreateProgramView.as_view(), name='create_program'),
-    path('programs/<int:program_id>/update/', UpdateProgramView.as_view(), name='update_program'),
-    path('programs/<int:program_id>/delete/', DeleteProgramView.as_view(), name='delete_program'),
+
 
     path('programs/<int:program_id>/add_day/', AddDayView.as_view(), name='add_day'),
     path('programs/<int:program_id>/days/<int:day_id>/update/', UpdateDayView.as_view(), name='update_day'),
@@ -29,6 +55,10 @@ urlpatterns = [
     path('programs/create_from_template', CreateProgramFromTemplateView.as_view(), name='program_from_template'),
 
     path('programbuilder/generate/<int:program_id>/', GenerateExcelView.as_view(), name='generate_excel'),
+
+    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
 
 ]
