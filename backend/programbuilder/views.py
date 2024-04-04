@@ -31,22 +31,8 @@ class CreateProgramView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-class UpdateProgramView(APIView):
-    def put(self, request, program_id, *args, **kwargs):
-        program = WorkoutProgram.objects.get(pk=program_id)
-        serializer = WorkoutProgramSerializer(program, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     
-
-class DeleteProgramView(APIView):
-    def delete(self, request, program_id, *args, **kwargs):
-        program = WorkoutProgram.objects.get(pk=program_id)
-        program.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 
 class AddDayView(APIView):
@@ -116,13 +102,9 @@ class AddExerciseView(APIView):
 
             # Prepare the data for the serializer
             data = request.data.copy()
-            #print(data)
             data['program_day'] = program_day.id
-            #print(data)
 
-            # Create a new ExerciseInDay using the serializer
             serializer = ExerciseInDaySerializer(data=data)
-            #print(serializer)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -138,10 +120,8 @@ class EditExerciseView(APIView):
         try:
             # Get the ExerciseInDay for the given id
             exercise_in_day = ExerciseInDay.objects.get(id=exercise_id)
-            print(exercise_in_day)
             # Prepare the data for the serializer
             data = request.data.copy()
-            print(data)
             # Update the ExerciseInDay using the serializer
             serializer = ExerciseInDaySerializer(exercise_in_day, data=data)
             print(serializer)
@@ -158,10 +138,8 @@ class EditExerciseView(APIView):
 class DeleteExerciseView(APIView):
     def delete(self, request, exercise_id):
         try:
-            # Get the ExerciseInDay for the given id
             exercise_in_day = ExerciseInDay.objects.get(id=exercise_id)
 
-            # Delete the ExerciseInDay
             exercise_in_day.delete()
 
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -177,7 +155,6 @@ class RetrieveProgramDaysView(APIView):
         try:
             program = WorkoutProgram.objects.get(pk=program_id)
             program_serializer = WorkoutProgramSerializer(program)
-            print(program_serializer)
             program_days = ProgramDay.objects.filter(workout_program=program)
             program_days_serializer = ProgramDaySerializer(program_days, many=True)
             response_data = {
@@ -280,9 +257,6 @@ class CreateProgramFromTemplateView(APIView):
                 ExerciseInDay.objects.create(program_day=new_day, exercise=exercise.exercise, sets=exercise.sets, reps=exercise.reps)
 
         return Response({"id": program.id, "name": program.name}, status=status.HTTP_201_CREATED)
-    
-
-
     
 
 
