@@ -124,7 +124,6 @@ class EditExerciseView(APIView):
             data = request.data.copy()
             # Update the ExerciseInDay using the serializer
             serializer = ExerciseInDaySerializer(exercise_in_day, data=data)
-            print(serializer)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
