@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-from decouple import Config, Csv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'programbuilder.apps.ProgramBuilderConfig',
     'corsheaders',
+    'Gym_App',
     
 ]
 
@@ -86,15 +87,14 @@ WSGI_APPLICATION = 'Gym_App.wsgi.application'
 
 
 # Database
-config = Config(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'program_builder_db',
-        'USER': 'karolis',
-        'PASSWORD': 'llama1',
-        'HOST': 'localhost',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres44',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
