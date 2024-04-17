@@ -9,6 +9,8 @@ services:
       - POSTGRES_DB=program_builder_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres44
+    ports:
+      - "5432:5432"
 
   backend:
     build: ./backend
