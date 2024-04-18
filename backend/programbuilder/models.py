@@ -39,7 +39,7 @@ class WorkoutProgram(models.Model):
     description = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.id, self.name}"
 
     
 class ProgramDay(models.Model):
@@ -54,8 +54,10 @@ class ProgramDay(models.Model):
     ]
 
     workout_program = models.ForeignKey(WorkoutProgram, on_delete=models.CASCADE, null=True)
-    day_of_week = models.CharField(max_length=20, choices=DAY_CHOICES, null=False)
+    day_of_week = models.CharField(max_length=20, null=False)
+    day_of_week_integer = models.IntegerField(null=True)
     rest_day = models.BooleanField(default=False)
+
     
 
 
@@ -75,3 +77,4 @@ class ExerciseInDay(models.Model):
     
 
 
+ 

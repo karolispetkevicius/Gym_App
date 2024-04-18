@@ -34,7 +34,7 @@ class ProgramDaySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProgramDay
-        fields = ['id', 'workout_program', 'day_of_week', 'rest_day', 'exercises']
+        fields = ['id', 'workout_program', 'day_of_week', 'day_of_week_integer', 'rest_day', 'exercises']
 
 
 

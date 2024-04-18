@@ -20,10 +20,18 @@ class CreateProgramView(APIView):
             program = serializer.save()
 
             # Create ProgramDay instances for each day of the week
-            days_of_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-            for day in days_of_week:
+            days_of_week = [
+                ('Monday', 1),
+                ('Tuesday', 2),
+                ('Wednesday', 3),
+                ('Thursday', 4),
+                ('Friday', 5),
+                ('Saturday', 6),
+                ('Sunday', 7),
+                ]
+            for day, order in days_of_week:
                 ProgramDay.objects.create(workout_program=program, day_of_week=day,
-                                           rest_day=False)
+                                           day_of_week_integer=order, rest_day=False)
 
             return Response({"id": program.id, "name": program.name}, status=status.HTTP_201_CREATED)
         else:
@@ -154,8 +162,9 @@ class RetrieveProgramDaysView(APIView):
         try:
             program = WorkoutProgram.objects.get(pk=program_id)
             program_serializer = WorkoutProgramSerializer(program)
-            program_days = ProgramDay.objects.filter(workout_program=program)
+            program_days = ProgramDay.objects.filter(workout_program=program).order_by('day_of_week_integer')
             program_days_serializer = ProgramDaySerializer(program_days, many=True)
+            print(program_days_serializer)
             response_data = {
                 'program_name': program_serializer.data['name'],
                 'program_days': program_days_serializer.data
@@ -164,6 +173,8 @@ class RetrieveProgramDaysView(APIView):
         except WorkoutProgram.DoesNotExist:
             return Response({"detail": "Workout program not found."}, status=status.HTTP_404_NOT_FOUND)
     
+
+
 
 class RetrieveProgramView(APIView):
     def get(self, request, program_id):
@@ -251,7 +262,7 @@ class CreateProgramFromTemplateView(APIView):
 
         # Copy the ProgramDay and ExerciseInDay instances from the template to the new program
         for day in template.programday_set.all():
-            new_day = ProgramDay.objects.create(workout_program=program, day_of_week=day.day_of_week, rest_day=day.rest_day)
+            new_day = ProgramDay.objects.create(workout_program=program, day_of_week=day.day_of_week, day_of_week_integer=day.day_of_week_integer, rest_day=day.rest_day)
             for exercise in day.exerciseinday_set.all():
                 ExerciseInDay.objects.create(program_day=new_day, exercise=exercise.exercise, sets=exercise.sets, reps=exercise.reps)
 
